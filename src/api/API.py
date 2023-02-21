@@ -8,6 +8,13 @@ class API:
     def __init__(self):
         self.API_BASE_URL = API_BASE_URL
 
+    def is_user_exist(self, telegram_id: int) -> bool:
+        link = f'{self.API_BASE_URL}/users/{telegram_id}'
+
+        response = requests.get(link)
+
+        return True if response.status_code == 200 else False
+
     def generate_key(self, telegram_id: int) -> dict:
         link = f'{self.API_BASE_URL}/users/{telegram_id}/generate-key'
         response = requests.get(link)
@@ -24,3 +31,9 @@ class API:
         response_json['status'] = True if response.status_code == 201 else False
 
         return response_json
+
+    def get_user_info(self, telegram_id: int) -> dict:
+        link = f'{self.API_BASE_URL}/users/{telegram_id}'
+        response = requests.get(link)
+
+        return response.json()
